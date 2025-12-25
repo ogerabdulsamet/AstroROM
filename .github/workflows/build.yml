@@ -1,0 +1,25 @@
+name: AstroROM Build
+
+on:
+  push:
+    branches: [ "main" ] # Kendi ana dal isminizle değiştirin
+  workflow_dispatch:      # Manuel çalıştırma butonu ekler
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Depoyu Kontrol Et (Checkout)
+        uses: actions/checkout@v4
+
+      - name: Gerekli Paketleri Kur
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y bc build-essential zip curl libstdc++6 git wget python3
+
+      - name: build.sh Dosyasına Çalıştırma İzni Ver
+        run: chmod +x build.sh
+
+      - name: build.sh Çalıştır
+        run: ./build.sh
